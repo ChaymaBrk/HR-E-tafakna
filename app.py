@@ -160,6 +160,8 @@ def hr_legal_assistant():
         language = detect(question)
     except Exception:
         language = "FR"
+
+
     def generate():
         try:
             # Get/create thread
