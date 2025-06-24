@@ -175,7 +175,12 @@ def hr_legal_assistant():
             
             # Check token limit before processing
             if thread_info["token_count"] >= MAX_TOKENS:
-                yield f"data: {json.dumps({'response': 'You have reached the maximum conversation limit.'})}\n\n"
+                if language == "ar":
+                    yield f"data: {json.dumps({'response': 'لقد وصلت إلى الحد الأقصى للمحادثة.'})}\n\n"
+                elif language == "fr":
+                    yield f"data: {json.dumps({'response': 'Vous avez atteint la limite maximale de conversation.'})}\n\n"
+                else:  # Default to English
+                    yield f"data: {json.dumps({'response': 'You have reached the maximum conversation limit.'})}\n\n"
                 return
             
             # Update activity time
@@ -193,10 +198,17 @@ def hr_legal_assistant():
             # Warn if approaching limit
             if not thread_info["warned"] and thread_info["token_count"] + question_tokens + estimated_response_tokens > TOKEN_WARNING:
                 thread_info["warned"] = True
-                warning_msg = (
+                if language == "ar":
+                    warning_msg = (
+                        f"تحذير: أنت تقترب من حد المحادثة "
+                    )
+                elif language == "fr":
+                    warning_msg = (
+                        f"Avertissement : Vous approchez de la limite de conversation "
+                    )
+                else:  # Default to English
+                    warning_msg = (
                     f"Warning: You are approaching the conversation limit "
-                    f"({thread_info['token_count'] + question_tokens + estimated_response_tokens}/{MAX_TOKENS} tokens). "
-                    "Consider starting a new conversation soon."
                 )
                 yield f"data: {json.dumps({'warning': warning_msg})}\n\n"
 
