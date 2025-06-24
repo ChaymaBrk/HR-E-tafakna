@@ -1,0 +1,8 @@
+flask
+flask-cors
+azure-identity
+azure-core
+azure-ai-projects
+azure-ai-agents
+pytz
+python-dotenv
