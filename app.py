@@ -15,6 +15,12 @@ import uuid
 import dotenv
 from langdetect import detect
 dotenv.load_dotenv()
+import tiktoken  
+from azure.storage.blob import BlobServiceClient
+import uuid
+import dotenv
+from langdetect import detect
+dotenv.load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
@@ -169,7 +175,7 @@ def hr_legal_assistant():
             
             # Check token limit before processing
             if thread_info["token_count"] >= MAX_TOKENS:
-                yield f"data: {json.dumps({'error': 'You have reached the maximum conversation limit. Please start a new conversation.'})}\n\n"
+                yield f"data: {json.dumps({'response': 'You have reached the maximum conversation limit.'})}\n\n"
                 return
             
             # Update activity time
@@ -181,7 +187,7 @@ def hr_legal_assistant():
             
             # Check if this would exceed the limit
             if thread_info["token_count"] + question_tokens + estimated_response_tokens > MAX_TOKENS:
-                yield f"data: {json.dumps({'error': 'This question would exceed the conversation token limit. Please ask a shorter question or start a new conversation.'})}\n\n"
+                yield f"data: {json.dumps({'response': 'This question would exceed the conversation token limit. Please ask a shorter question or start a new conversation.'})}\n\n"
                 return
             
             # Warn if approaching limit
@@ -289,4 +295,4 @@ def cleanup_old_threads():
             print(f"Cleaned up thread for employee {employee_id}")
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
