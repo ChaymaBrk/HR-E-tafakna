@@ -1,8 +1,11 @@
-flask
+Flask
 flask-cors
 azure-identity
 azure-core
 azure-ai-projects
 azure-ai-agents
-pytz
+azure-storage-blob
+tiktoken
 python-dotenv
+langdetect
+pytz
