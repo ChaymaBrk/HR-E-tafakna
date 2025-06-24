@@ -46,8 +46,8 @@ except:
     tokenizer = None
 
 # Constants
-MAX_TOKENS = 5000  # Maximum tokens per conversation
-TOKEN_WARNING = 4500  # Warn when approaching limit
+MAX_TOKENS = 5000  
+TOKEN_WARNING = 4500  
 
 # Initialize Azure client (unchanged)
 if all([ai_studio_endpoint, ai_studio_subscription_id, ai_studio_resource_group, 
@@ -160,7 +160,6 @@ def hr_legal_assistant():
         language = detect(question)
     except Exception:
         language = "FR"
-
 
     def generate():
         try:
